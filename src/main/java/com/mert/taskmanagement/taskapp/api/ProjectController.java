@@ -81,6 +81,7 @@ public class ProjectController {
             response.setName(project.getName());
             response.setDescription(project.getDescription());
             response.setCreatedAt(project.getCreatedAt());
+            response.setCreatedById(project.getCreatedBy().getId());
 
 
 
