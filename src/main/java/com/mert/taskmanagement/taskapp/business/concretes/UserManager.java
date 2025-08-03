@@ -53,4 +53,10 @@ public class UserManager implements IUserService {
         this.userRepo.delete(deletedUser);
         return true;
     }
+
+    @Override
+    public User findByEmail(String email) {
+        return this.userRepo.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Kullanıcı bulunamadı: " + email));
+    }
 }

@@ -28,8 +28,8 @@ public class User {
     @Column(name = "user_password",nullable = false)
     private String password;
 
-    @Column(name = "user-role",nullable = false)
-    private Role role;
+    @Column(name = "user-role")
+    private Role role = Role.ROLE_USER;
 
     @Column(name = "user_created_time",nullable = false)
     private LocalDate createdAt ;

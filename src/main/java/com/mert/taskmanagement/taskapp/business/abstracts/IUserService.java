@@ -15,4 +15,6 @@ public interface IUserService {
 
     boolean delete(int id);
 
+    User findByEmail(String email);
+
 }

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/v1/users")
+@RequestMapping("/v1/tasks")
 public class TaskController {
     private final IModelMapperService modelMapper;
     private final ITaskService taskService;
