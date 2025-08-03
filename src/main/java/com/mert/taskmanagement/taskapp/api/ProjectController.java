@@ -11,6 +11,7 @@ import com.mert.taskmanagement.taskapp.dto.request.user.UserUpdateRequest;
 import com.mert.taskmanagement.taskapp.dto.response.CursorResponse;
 import com.mert.taskmanagement.taskapp.dto.response.project.ProjectResponse;
 import com.mert.taskmanagement.taskapp.entities.Project;
+import com.mert.taskmanagement.taskapp.entities.Task;
 import com.mert.taskmanagement.taskapp.entities.User;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1/projects")
@@ -44,9 +48,7 @@ public class ProjectController {
         Project saveProject =this.modelMapper.forRequest().map(projectSaveRequest, Project.class);
         saveProject.setCreatedAt(LocalDate.now());
 
-        //yapılıyor
-       // User currentUser = userService.findByEmail(email);
-        //saveProject.setCreatedBy(currentUser);
+
 
         this.projectService.save(saveProject);
 
@@ -70,12 +72,28 @@ public class ProjectController {
                                                            @RequestParam(name = "pagesize",required = false,defaultValue = "10")int pageSize)
     {
 
-        Page<Project> projects =this.projectService.findAll(page,pageSize);
+        Page<Project> projects = this.projectService.findAll(page, pageSize);
 
-        Page<ProjectResponse> projectResponsePage =projects.map(user -> this.modelMapper.forResponse().map(user, ProjectResponse.class));
+        // Manuel mapping - ModelMapper'ı bypass et
+        Page<ProjectResponse> projectResponsePage = projects.map(project -> {
+            ProjectResponse response = new ProjectResponse();
+            response.setId(project.getId());
+            response.setName(project.getName());
+            response.setDescription(project.getDescription());
+            response.setCreatedAt(project.getCreatedAt());
+
+
+
+                List<Integer> taskIds = project.getTasks().stream()
+                        .map(Task::getId)
+                        .collect(Collectors.toList());
+                response.setTasksId(taskIds);
+
+
+            return response;
+        });
 
         return CreateResult.getAll(projectResponsePage);
-
     }
 
 
