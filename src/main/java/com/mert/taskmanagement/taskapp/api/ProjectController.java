@@ -81,7 +81,12 @@ public class ProjectController {
             response.setName(project.getName());
             response.setDescription(project.getDescription());
             response.setCreatedAt(project.getCreatedAt());
-            response.setCreatedById(project.getCreatedBy().getId());
+            // NULL CHECK - createdBy
+            if (project.getCreatedBy() != null) {
+                response.setCreatedById(project.getCreatedBy().getId());
+            } else {
+                response.setCreatedById(0); // ya da null
+            }
 
 
 
