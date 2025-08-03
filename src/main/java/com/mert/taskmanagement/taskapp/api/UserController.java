@@ -26,18 +26,18 @@ public class UserController {
         this.userService = userService;
         this.modelMapper = modelMapper;
     }
-//Bunu kullanmıyoruz artık auth yapıldı
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public UserResponse save(@Valid @RequestBody UserSaveRequest userSaveRequest){
-//        User saveUser =this.modelMapper.forRequest().map(userSaveRequest,User.class);
-//        saveUser.setCreatedAt(LocalDate.now());
-//        this.userService.save(saveUser);
-//
-//        UserResponse userResponse =this.modelMapper.forResponse().map(saveUser,UserResponse.class);
-//        return userResponse;
-//
-//    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserResponse save(@Valid @RequestBody UserSaveRequest userSaveRequest){
+        User saveUser =this.modelMapper.forRequest().map(userSaveRequest,User.class);
+        saveUser.setCreatedAt(LocalDate.now());
+        this.userService.save(saveUser);
+
+        UserResponse userResponse =this.modelMapper.forResponse().map(saveUser,UserResponse.class);
+        return userResponse;
+
+    }
 
     public  UserResponse update (@Valid @RequestBody UserUpdateRequest userUpdateRequest){
         User updatedUser=this.modelMapper.forRequest().map(userUpdateRequest,User.class);

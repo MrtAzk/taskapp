@@ -1,6 +1,8 @@
 package com.mert.taskmanagement.taskapp.api;
 
+import com.mert.taskmanagement.taskapp.business.abstracts.IProjectService;
 import com.mert.taskmanagement.taskapp.business.abstracts.ITaskService;
+import com.mert.taskmanagement.taskapp.business.abstracts.IUserService;
 import com.mert.taskmanagement.taskapp.core.config.modelMapper.IModelMapperService;
 import com.mert.taskmanagement.taskapp.core.result.ResultData;
 import com.mert.taskmanagement.taskapp.core.utils.CreateResult;
@@ -13,6 +15,7 @@ import com.mert.taskmanagement.taskapp.dto.response.project.ProjectResponse;
 import com.mert.taskmanagement.taskapp.dto.response.task.TaskResponse;
 import com.mert.taskmanagement.taskapp.entities.Project;
 import com.mert.taskmanagement.taskapp.entities.Task;
+import com.mert.taskmanagement.taskapp.entities.User;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -25,10 +28,14 @@ import java.time.LocalDate;
 public class TaskController {
     private final IModelMapperService modelMapper;
     private final ITaskService taskService;
+    private final IUserService userService;
+    private final IProjectService projectService;
 
-    public TaskController(IModelMapperService modelMapper, ITaskService taskService) {
+    public TaskController(IModelMapperService modelMapper, ITaskService taskService, IUserService userService, IProjectService projectService) {
         this.modelMapper = modelMapper;
         this.taskService = taskService;
+        this.userService = userService;
+        this.projectService = projectService;
     }
 
 
@@ -37,6 +44,16 @@ public class TaskController {
     public TaskResponse save(@Valid @RequestBody TaskSaveRequest taskSaveRequest){
         Task saveTask =this.modelMapper.forRequest().map(taskSaveRequest, Task.class);
 
+
+
+        // User ve Project entity'lerini set et
+        User assignedUser = userService.get(taskSaveRequest.getAssignedUserId());
+        Project project = projectService.get(taskSaveRequest.getProjectId());
+
+        saveTask.setAssignedUser(assignedUser);
+        saveTask.setProject(project);
+        saveTask.setDueDate(LocalDate.now().plusDays(7)); // Default 7 gün sonra
+
         this.taskService.save(saveTask);
 
 
@@ -44,9 +61,15 @@ public class TaskController {
         return taskResponse;
 
     }
-
+    @PutMapping("/{id}")
     public TaskResponse update (@Valid @RequestBody TaskUpdateRequest taskUpdateRequest){
        Task updatedTask=this.modelMapper.forRequest().map(taskUpdateRequest,Task.class);
+
+        User assignedUser = userService.get(taskUpdateRequest.getAssignedUserId());
+        Project project = projectService.get(taskUpdateRequest.getProjectId());
+
+        updatedTask.setAssignedUser(assignedUser);
+        updatedTask.setProject(project);
         this.taskService.save(updatedTask);
 
         TaskResponse taskResponse=this.modelMapper.forResponse().map(updatedTask, TaskResponse.class);

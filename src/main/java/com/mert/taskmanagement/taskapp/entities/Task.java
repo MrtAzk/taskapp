@@ -28,7 +28,7 @@ public class Task {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "task_status")
-    private Status status;
+    private Status status =Status.IN_PROGRESS;
 
     @Column(name = "task_dueDate")
     private LocalDate dueDate ;

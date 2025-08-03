@@ -1,9 +1,6 @@
 package com.mert.taskmanagement.taskapp.dto.request.task;
 
-import com.mert.taskmanagement.taskapp.entities.Project;
-import com.mert.taskmanagement.taskapp.entities.User;
-import com.mert.taskmanagement.taskapp.entities.enums.Status;
-import jakarta.persistence.*;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -23,7 +20,6 @@ public class TaskSaveRequest {
     private String description;
 
 
-    private Status status;
 
 
     @Positive

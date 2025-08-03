@@ -15,6 +15,8 @@ import com.mert.taskmanagement.taskapp.entities.User;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -24,10 +26,14 @@ import java.time.LocalDate;
 public class ProjectController {
     private final IProjectService projectService ;
     private final IModelMapperService modelMapper;
+    private final IUserService userService;
 
-    public ProjectController(IProjectService projectService, IModelMapperService modelMapper) {
+
+    public ProjectController(IProjectService projectService, IModelMapperService modelMapper, IUserService userService) {
         this.projectService = projectService;
         this.modelMapper = modelMapper;
+        this.userService = userService;
+
     }
 
 
@@ -37,6 +43,11 @@ public class ProjectController {
     public ProjectResponse save(@Valid @RequestBody ProjectSaveRequest projectSaveRequest){
         Project saveProject =this.modelMapper.forRequest().map(projectSaveRequest, Project.class);
         saveProject.setCreatedAt(LocalDate.now());
+
+        //yapılıyor
+       // User currentUser = userService.findByEmail(email);
+        //saveProject.setCreatedBy(currentUser);
+
         this.projectService.save(saveProject);
 
 
@@ -44,7 +55,7 @@ public class ProjectController {
         return projectResponse;
 
     }
-
+    @PutMapping("/{id}")
     public ProjectResponse update (@Valid @RequestBody ProjectUpdateRequest projectUpdateRequest){
         Project updatedProject=this.modelMapper.forRequest().map(projectUpdateRequest,Project.class);
         this.projectService.save(updatedProject);
@@ -67,6 +78,7 @@ public class ProjectController {
 
     }
 
+
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResultData<ProjectResponse> get(@PathVariable("id") int id){
@@ -74,4 +86,5 @@ public class ProjectController {
         ProjectResponse projectResponse=this.modelMapper.forResponse().map(project,ProjectResponse.class);
         return CreateResult.success(projectResponse);
     }
+
 }
