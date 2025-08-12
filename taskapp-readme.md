@@ -141,7 +141,7 @@ Content-Type: application/json
 
 ## 🔮 Gelecek Planları
 
-- [ ] Frontend (React/Angular) entegrasyonu
+- [ ] Frontend (React) entegrasyonu
 - [ ] Email notification sistemi
 - [ ] File upload desteği
 - [ ] Advanced filtering ve search
