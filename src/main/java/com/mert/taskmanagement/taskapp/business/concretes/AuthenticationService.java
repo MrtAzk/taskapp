@@ -25,7 +25,12 @@ public class AuthenticationService {
     public UserResponse save(UserSaveRequest userSaveRequest) {
 
 
-        User user=User.builder().name(userSaveRequest.getName()).password(passwordEncoder.encode(userSaveRequest.getPassword())).role(Role.ROLE_USER).build();
+        User user = User.builder()
+                .name(userSaveRequest.getName())
+                .email(userSaveRequest.getEmail()) // ← Bu satır eksikti
+                .password(passwordEncoder.encode(userSaveRequest.getPassword()))
+                .role(Role.ROLE_USER)
+                .build();
         userRepo.save(user);
 
 

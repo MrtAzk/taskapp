@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TaskUpdateRequest {
+
+    private int id;
     @NotBlank
     private String title ;
 
