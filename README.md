@@ -149,9 +149,9 @@ Content-Type: application/json
 
 ## 📧 İletişim
 
-**Geliştirici**: Mert  
-**LinkedIn**: [LinkedIn Profile]  
-**GitHub**: [GitHub Profile]
+**Geliştirici**: Mert-Azko  
+**LinkedIn**: [https://www.linkedin.com/in/mert-azko-]  
+
 
 ---
 ⭐ Projeyi beğendiyseniz star vermeyi unutmayın!
