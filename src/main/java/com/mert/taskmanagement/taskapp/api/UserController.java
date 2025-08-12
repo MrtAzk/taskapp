@@ -38,7 +38,7 @@ public class UserController {
 
     }
     @PutMapping
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     public  UserResponse update (@Valid @RequestBody UserUpdateRequest userUpdateRequest){
         User updatedUser=this.modelMapper.forRequest().map(userUpdateRequest,User.class);
         this.userService.save(updatedUser);

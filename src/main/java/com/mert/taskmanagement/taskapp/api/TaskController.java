@@ -59,7 +59,7 @@ public class TaskController {
 
     }
     @PutMapping
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     public TaskResponse update (@Valid @RequestBody TaskUpdateRequest taskUpdateRequest){
        Task updatedTask=this.modelMapper.forRequest().map(taskUpdateRequest,Task.class);
 
