@@ -8,25 +8,21 @@ import com.mert.taskmanagement.taskapp.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserManager implements IUserService {
 
     private final UserRepo userRepo;
-    private  final PasswordEncoder passwordEncoder;
 
-    public UserManager(UserRepo userRepo, PasswordEncoder passwordEncoder) {
+
+    public UserManager(UserRepo userRepo ) {
         this.userRepo = userRepo;
-        this.passwordEncoder = passwordEncoder;
+
     }
 
     @Override
     public User save(User user) {
-        String notHashed =user.getPassword();
-        String hashed=passwordEncoder.encode(notHashed);
-        user.setPassword(hashed);
         return this.userRepo.save(user);
     }
 
