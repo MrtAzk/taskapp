@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ProjectUpdateRequest {
 
-
+    private int id;
     @NotBlank
     private String name ;
 

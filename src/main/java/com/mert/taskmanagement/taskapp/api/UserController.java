@@ -31,7 +31,6 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponse save(@Valid @RequestBody UserSaveRequest userSaveRequest){
         User saveUser =this.modelMapper.forRequest().map(userSaveRequest,User.class);
-        saveUser.setCreatedAt(LocalDate.now());
         this.userService.save(saveUser);
 
         UserResponse userResponse =this.modelMapper.forResponse().map(saveUser,UserResponse.class);

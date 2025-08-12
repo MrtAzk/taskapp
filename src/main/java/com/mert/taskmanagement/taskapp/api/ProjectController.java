@@ -57,7 +57,7 @@ public class ProjectController {
         return projectResponse;
 
     }
-    @PutMapping("/{id}")
+    @PutMapping
     public ProjectResponse update (@Valid @RequestBody ProjectUpdateRequest projectUpdateRequest){
         Project updatedProject=this.modelMapper.forRequest().map(projectUpdateRequest,Project.class);
         this.projectService.save(updatedProject);
