@@ -6,12 +6,9 @@ import com.mert.taskmanagement.taskapp.business.abstracts.IUserService;
 import com.mert.taskmanagement.taskapp.core.config.modelMapper.IModelMapperService;
 import com.mert.taskmanagement.taskapp.core.result.ResultData;
 import com.mert.taskmanagement.taskapp.core.utils.CreateResult;
-import com.mert.taskmanagement.taskapp.dto.request.project.ProjectSaveRequest;
-import com.mert.taskmanagement.taskapp.dto.request.project.ProjectUpdateRequest;
 import com.mert.taskmanagement.taskapp.dto.request.task.TaskSaveRequest;
 import com.mert.taskmanagement.taskapp.dto.request.task.TaskUpdateRequest;
 import com.mert.taskmanagement.taskapp.dto.response.CursorResponse;
-import com.mert.taskmanagement.taskapp.dto.response.project.ProjectResponse;
 import com.mert.taskmanagement.taskapp.dto.response.task.TaskResponse;
 import com.mert.taskmanagement.taskapp.entities.Project;
 import com.mert.taskmanagement.taskapp.entities.Task;
@@ -61,7 +58,8 @@ public class TaskController {
         return taskResponse;
 
     }
-    @PutMapping("/{id}")
+    @PutMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public TaskResponse update (@Valid @RequestBody TaskUpdateRequest taskUpdateRequest){
        Task updatedTask=this.modelMapper.forRequest().map(taskUpdateRequest,Task.class);
 

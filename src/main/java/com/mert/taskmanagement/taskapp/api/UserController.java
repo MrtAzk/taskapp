@@ -38,7 +38,8 @@ public class UserController {
         return userResponse;
 
     }
-    @PutMapping("/{id}")
+    @PutMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public  UserResponse update (@Valid @RequestBody UserUpdateRequest userUpdateRequest){
         User updatedUser=this.modelMapper.forRequest().map(userUpdateRequest,User.class);
         this.userService.save(updatedUser);
