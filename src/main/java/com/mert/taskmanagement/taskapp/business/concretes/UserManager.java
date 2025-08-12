@@ -8,6 +8,7 @@ import com.mert.taskmanagement.taskapp.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -54,5 +55,10 @@ public class UserManager implements IUserService {
     public User findByEmail(String email) {
         return this.userRepo.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("Kullanıcı bulunamadı: " + email));
+    }
+
+    @Override
+    public User findByName(String userName) {
+        return this.userRepo.findByName(userName).orElseThrow(()->new UsernameNotFoundException("Kullanıcı bulunamadı+"+userName));
     }
 }

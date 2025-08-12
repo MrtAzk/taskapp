@@ -3,6 +3,8 @@ package com.mert.taskmanagement.taskapp.business.abstracts;
 import com.mert.taskmanagement.taskapp.entities.User;
 import org.springframework.data.domain.Page;
 
+import java.util.Optional;
+
 public interface IUserService {
 
     User save(User user);
@@ -16,5 +18,6 @@ public interface IUserService {
     boolean delete(int id);
 
     User findByEmail(String email);
+    User findByName(String userName);
 
 }
