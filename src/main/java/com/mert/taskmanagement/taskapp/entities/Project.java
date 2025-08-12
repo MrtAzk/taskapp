@@ -32,6 +32,6 @@ public class Project {
     @JoinColumn(name = "created_by")  // FK tanımı
     private User createdBy;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project",fetch = FetchType.EAGER)
     private List<Task> tasks;
 }
